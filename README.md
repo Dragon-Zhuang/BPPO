@@ -17,3 +17,15 @@ The code consists of seven Python scripts and the file `main.py` that contains v
 ```
 python main.py --env hopper-medium-v2 
 ```
+## Note 
+If you have any comments or suggestions, please create an issue or contact me (e-mail address in the paper). If you use BPPO, we would be happy if you cite our paper:
+```
+@inproceedings{
+zhuang2023behavior,
+title={Behavior Proximal Policy Optimization },
+author={Zifeng Zhuang and Kun LEI and Jinxin Liu and Donglin Wang and Yilang Guo},
+booktitle={International Conference on Learning Representations},
+year={2023},
+url={https://openreview.net/forum?id=3c13LptpIph}
+}
+```
