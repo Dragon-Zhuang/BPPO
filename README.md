@@ -14,3 +14,6 @@ d4rl                          1.1
 ### Running the code
 - `python main.py`: trains the network, storing checkpoints along the way.
 - `Example`: python main.py --env hopper-medium-v2 
+```
+python train.py
+```
