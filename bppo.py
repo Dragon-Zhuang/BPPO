@@ -18,12 +18,11 @@ class BehaviorCloning:
         self,
         device: torch.device,
         state_dim: int,
-        action_dim: int,
         hidden_dim: int, 
         depth: int,
+        action_dim: int,
         policy_lr: float,
-        batch_size: int,
-        **kwargs
+        batch_size: int
     ) -> None:
         super().__init__()
         self._device = device
@@ -125,8 +124,7 @@ class BehaviorProximalPolicyOptimization(ProximalPolicyOptimization):
         entropy_weight: float,
         decay: float,
         omega: float,
-        batch_size: int,
-        **kwargs
+        batch_size: int
     ) -> None:
         super().__init__(
             device = device,

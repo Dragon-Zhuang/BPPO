@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # Experiment
     parser.add_argument("--env", default="walker2d-medium-expert-v2")        
     parser.add_argument("--seed", default=0, type=int)
-    parser.add_argument("--gpu", default=1, type=int)             
+    parser.add_argument("--gpu", default=0, type=int)             
     parser.add_argument("--log_freq", default=int(2e3), type=int)
     parser.add_argument("--path", default="logs", type=str)
     # For Value
@@ -101,15 +101,16 @@ if __name__ == "__main__":
     logger = SummaryWriter(log_dir=logger_path, comment=comment)
     
     
-    value = ValueLearner(device, state_dim, **args)
-    Q_bc = QSarsaLearner(device, state_dim, action_dim, **args)
+    # initilize
+    value = ValueLearner(device, state_dim, args.v_hidden_dim, args.v_depth, args.v_lr, args.v_batch_size)
+    Q_bc = QSarsaLearner(device, state_dim, action_dim, args.q_hidden_dim, args.q_depth, args.q_lr, args.target_update_freq, args.tau, args.gamma, args.q_batch_size)
     if args.is_offpolicy_update:
-        Q_pi = QPiLearner(device, state_dim, action_dim, **args)
-    bc = BehaviorCloning(device, state_dim, action_dim, **args)
-    bppo = BehaviorProximalPolicyOptimization(device, state_dim, action_dim, **args)
+        Q_pi = QPiLearner(device, state_dim, action_dim, args.q_hidden_dim, args.q_depth, args.q_lr, args.target_update_freq, args.tau, args.gamma, args.q_batch_size)
+    bc = BehaviorCloning(device, state_dim, args.bc_hidden_dim, args.bc_depth, action_dim, args.bc_lr, args.bc_batch_size)
+    bppo = BehaviorProximalPolicyOptimization(device, state_dim, args.bppo_hidden_dim, args.bppo_depth, action_dim, args.bppo_lr, args.clip_ratio, args.entropy_weight, args.decay, args.omega, args.bppo_batch_size)
 
 
-# value training 
+    # value training 
     value_path = os.path.join(path, 'value.pt')
     if os.path.exists(value_path):
         value.load(value_path)
@@ -123,7 +124,7 @@ if __name__ == "__main__":
 
         value.save(value_path)
 
-# Q_bc training
+    # Q_bc training
     Q_bc_path = os.path.join(path, 'Q_bc.pt')
     if os.path.exists(Q_bc_path):
         Q_bc.load(Q_bc_path)
@@ -140,7 +141,7 @@ if __name__ == "__main__":
     if args.is_offpolicy_update:
         Q_pi.load(Q_bc_path)
 
-# bc training
+    # bc training
     best_bc_path = os.path.join(path, 'bc_best.pt')
     if os.path.exists(best_bc_path):
         bc.load(best_bc_path)
@@ -163,7 +164,7 @@ if __name__ == "__main__":
         bc.load(best_bc_path)
 
 
-# bppo training    
+    # bppo training    
     bppo.set_policy(bc._policy)
     bppo.set_old_policy(bc._policy)
     best_bppo_path = os.path.join(path, current_time, 'bppo_best.pt')

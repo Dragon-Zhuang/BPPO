@@ -18,8 +18,7 @@ class ValueLearner:
         hidden_dim: int, 
         depth: int, 
         value_lr: float, 
-        batch_size: int,
-        **kwargs
+        batch_size: int
     ) -> None:
         super().__init__()
         self._device = device
@@ -163,8 +162,7 @@ class QSarsaLearner(QLearner):
         target_update_freq: int,
         tau: float,
         gamma: float,
-        batch_size: int,
-        **kwargs
+        batch_size: int
     ) -> None:
         super().__init__(
         device = device,
@@ -206,8 +204,7 @@ class QPiLearner(QLearner):
         target_update_freq: int,
         tau: float,
         gamma: float,
-        batch_size: int,
-        **kwargs
+        batch_size: int
     ) -> None:
         super().__init__(
         device = device,
