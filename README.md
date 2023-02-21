@@ -3,7 +3,7 @@ Author's Pytorch implementation of ICLR2023 paper \textbf{B}ehavior \textbf{P}ro
 
 
 ## Overview of the Code
-The code consists of seven Python scripts and the file `main.py` that contains various parameter settings.
+The code consists of seven Python scripts and the file `main.py` that contains various parameter settings which are interpreted and described in our paper.
 ### Needed
 - `torch                         1.12.0`
 - `torchaudio                    0.12.0`
