@@ -13,7 +13,7 @@ mujoco-py                     2.1.2.14
 d4rl                          1.1
 ### Running the code
 - `python main.py`: trains the network, storing checkpoints along the way.
-- `Example`: python main.py --env hopper-medium-v2 
+- `Example`: 
 ```
-python train.py
+python main.py --env hopper-medium-v2 
 ```
