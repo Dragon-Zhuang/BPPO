@@ -5,17 +5,12 @@ Author's Pytorch implementation of ICLR2023 paper \textbf{B}ehavior \textbf{P}ro
 ## Overview of the Code
 The code consists of seven Python scripts and the file `main.py` that contains various parameter settings.
 ### Needed
--`torch                         1.12.0`
-
--`torchaudio                    0.12.0`
-
--`torchvision                   0.13.0`
-
--`mujoco                        2.2.1`
-
--`mujoco-py                     2.1.2.14`
-
--`d4rl                          1.1`
+- `torch                         1.12.0`
+- `torchaudio                    0.12.0`
+- `torchvision                   0.13.0`
+- `mujoco                        2.2.1`
+- `mujoco-py                     2.1.2.14`
+- `d4rl                          1.1`
 ### Running the code
 - `python main.py`: trains the network, storing checkpoints along the way.
 - `Example`: 
