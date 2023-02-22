@@ -16,8 +16,8 @@ from bppo import BehaviorCloning, BehaviorProximalPolicyOptimization
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # Experiment
-    parser.add_argument("--env", default="walker2d-medium-expert-v2")        
-    parser.add_argument("--seed", default=0, type=int)
+    parser.add_argument("--env", default="hopper-medium-v2")        
+    parser.add_argument("--seed", default=8, type=int)
     parser.add_argument("--gpu", default=0, type=int)             
     parser.add_argument("--log_freq", default=int(2e3), type=int)
     parser.add_argument("--path", default="logs", type=str)
