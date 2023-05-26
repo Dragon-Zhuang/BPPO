@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # For Value
     parser.add_argument("--v_steps", default=int(2e6), type=int) 
     parser.add_argument("--v_hidden_dim", default=512, type=int)
-    parser.add_argument("--v_depth", default=2, type=int)
+    parser.add_argument("--v_depth", default=3, type=int)
     parser.add_argument("--v_lr", default=1e-4, type=float)
     parser.add_argument("--v_batch_size", default=512, type=int)
     # For Q
