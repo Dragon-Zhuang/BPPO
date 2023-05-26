@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
 
     # bppo training    
-    bppo.set_policy(bc._policy)
+    bppo.load(best_bc_path)
     bppo.set_old_policy(bc._policy)
     best_bppo_path = os.path.join(path, current_time, 'bppo_best.pt')
     Q = Q_bc
