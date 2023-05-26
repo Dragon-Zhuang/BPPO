@@ -8,7 +8,7 @@ def soft_clamp(
     x: torch.Tensor, bound: tuple
     ) -> torch.Tensor:
     low, high = bound
-    x = torch.tanh(x)
+    #x = torch.tanh(x)
     x = low + 0.5 * (high - low) * (x + 1)
     return x
 
