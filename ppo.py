@@ -177,18 +177,11 @@ class ProximalPolicyOptimization:
         self, path: str
     ) -> None:
         self._policy.load_state_dict(torch.load(path, map_location=self._device))
+        self._old_policy.load_state_dict(self._policy.state_dict())
         #self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
         print('Policy parameters loaded')
 
-
-    def set_policy(
-        self, policy: GaussPolicyMLP
-    ) -> None:
-        self._policy = deepcopy(policy)
-        self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
-
-
     def set_old_policy(
-        self, old_policy: GaussPolicyMLP
+        self,
     ) -> None:
-        self._old_policy = deepcopy(old_policy)
+        self._old_policy.load_state_dict(self._policy.state_dict())
