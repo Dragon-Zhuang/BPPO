@@ -43,12 +43,6 @@ class ValueMLP(nn.Module):
     ) -> None:
         super().__init__()
         self._net = MLP(state_dim, hidden_dim, depth, 1, 'relu')
-        for name, p in self.named_parameters():
-                if 'weight' in name:
-                    if len(p.size()) >= 2:
-                        nn.init.orthogonal_(p, gain=1)
-                elif 'bias' in name:
-                    nn.init.constant_(p, 0)
 
     def forward(
         self, s: torch.Tensor
@@ -66,12 +60,6 @@ class QMLP(nn.Module):
     ) -> None:
         super().__init__()
         self._net = MLP((state_dim + action_dim), hidden_dim, depth, 1, 'relu')
-        for name, p in self.named_parameters():
-                if 'weight' in name:
-                    if len(p.size()) >= 2:
-                        nn.init.orthogonal_(p, gain=1)
-                elif 'bias' in name:
-                    nn.init.constant_(p, 0)
 
     def forward(
         self, s: torch.Tensor, a: torch.Tensor
