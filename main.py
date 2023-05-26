@@ -57,7 +57,7 @@ if __name__ == "__main__":
     parser.add_argument("--is_clip_decay", default=True, type=bool)  
     parser.add_argument("--is_bppo_lr_decay", default=True, type=bool)       
     parser.add_argument("--is_update_old_policy", default=True, type=bool)
-
+    parser.add_argument("--is_state_norm", default=True, type=bool)
     
     args = parser.parse_args()
     print(f'------current env {args.env} and current seed {args.seed}------')
@@ -92,8 +92,12 @@ if __name__ == "__main__":
     replay_buffer = OfflineReplayBuffer(device, state_dim, action_dim, len(dataset['actions']))
     replay_buffer.load_dataset(dataset=dataset)
     replay_buffer.compute_return(args.gamma)
-    mean, std = replay_buffer.normalize_state() #for hopper-medium-v2 task, don't use state normalize
-
+    
+    #for hopper-medium-v2 task, don't use state normalize
+    if args.is_state_norm:
+        mean, std = replay_buffer.normalize_state()
+    else:
+        mean, std = 0., 1.
 
     # summarywriter logger
     comment = args.env + '_' + str(args.seed)
