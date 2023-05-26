@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument("--gamma", default=0.99, type=float)
     parser.add_argument("--is_offpolicy_update", default=False, type=bool)
     # For BehaviorCloning
-    parser.add_argument("--bc_steps", default=int(5e5), type=int) # try to reduce the bc/q/v step if it works poorly, 1e-5/5e-5/5e-5 for bc/q/v for example
+    parser.add_argument("--bc_steps", default=int(5e5), type=int) # try to reduce the bc/q/v step if it works poorly, 5e-4/2e-5/2e-5 for bc/q/v, for example
     parser.add_argument("--bc_hidden_dim", default=1024, type=int)
     parser.add_argument("--bc_depth", default=2, type=int)
     parser.add_argument("--bc_lr", default=1e-4, type=float)
