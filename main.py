@@ -35,7 +35,7 @@ if __name__ == "__main__":
     parser.add_argument("--q_lr", default=1e-4, type=float) 
     parser.add_argument("--q_batch_size", default=512, type=int)
     parser.add_argument("--target_update_freq", default=2, type=int)
-    parser.add_argument("--tau", default=0.05, type=float)
+    parser.add_argument("--tau", default=0.005, type=float)
     parser.add_argument("--gamma", default=0.99, type=float)
     parser.add_argument("--is_offpolicy_update", default=False, type=bool)
     # For BehaviorCloning
