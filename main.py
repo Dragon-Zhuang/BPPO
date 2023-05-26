@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument("--gamma", default=0.99, type=float)
     parser.add_argument("--is_offpolicy_update", default=False, type=bool)
     # For BehaviorCloning
-    parser.add_argument("--bc_steps", default=int(5e5), type=int) 
+    parser.add_argument("--bc_steps", default=int(5e5), type=int) # try to reduce the bc step if it works poorly
     parser.add_argument("--bc_hidden_dim", default=1024, type=int)
     parser.add_argument("--bc_depth", default=2, type=int)
     parser.add_argument("--bc_lr", default=1e-4, type=float)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     parser.add_argument("--bppo_lr", default=1e-4, type=float)  
     parser.add_argument("--bppo_batch_size", default=512, type=int)
     parser.add_argument("--clip_ratio", default=0.25, type=float)
-    parser.add_argument("--entropy_weight", default=0.0, type=float)
+    parser.add_argument("--entropy_weight", default=0.0, type=float) # for ()-medium-() tasks, try to use the entropy loss, weight == 0.01
     parser.add_argument("--decay", default=0.96, type=float)
     parser.add_argument("--omega", default=0.9, type=float)
     parser.add_argument("--is_clip_decay", default=True, type=bool)  
