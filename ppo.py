@@ -44,15 +44,14 @@ class ProximalPolicyOptimization:
         orthogonal_initWeights(self._policy)
         self._optimizer = torch.optim.Adam(
             self._policy.parameters(),
-            lr=policy_lr,
-            eps=1e-5
+            lr=policy_lr
             )
         self._policy_lr = policy_lr
         self._old_policy = deepcopy(self._policy)
         self._scheduler = torch.optim.lr_scheduler.StepLR(
             self._optimizer,
             step_size=2,
-            gamma=0.96
+            gamma=0.98
             )
         
         self._clip_ratio = clip_ratio
