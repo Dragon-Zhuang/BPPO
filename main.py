@@ -57,7 +57,7 @@ if __name__ == "__main__":
     parser.add_argument("--is_clip_decay", default=True, type=bool)  
     parser.add_argument("--is_bppo_lr_decay", default=True, type=bool)       
     parser.add_argument("--is_update_old_policy", default=True, type=bool)
-    parser.add_argument("--is_state_norm", default=True, type=bool)
+    parser.add_argument("--is_state_norm", default=False, type=bool)
     
     args = parser.parse_args()
     print(f'------current env {args.env} and current seed {args.seed}------')
