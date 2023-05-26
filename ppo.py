@@ -41,7 +41,7 @@ class ProximalPolicyOptimization:
         super().__init__()
         self._device = device
         self._policy = GaussPolicyMLP(state_dim, hidden_dim, depth, action_dim).to(device)
-        orthogonal_initWeights(self._policy)
+        #orthogonal_initWeights(self._policy)
         self._optimizer = torch.optim.Adam(
             self._policy.parameters(),
             lr=policy_lr,
