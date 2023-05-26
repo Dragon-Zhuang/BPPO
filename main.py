@@ -170,7 +170,6 @@ if __name__ == "__main__":
 
     # bppo training    
     bppo.load(best_bc_path)
-    bppo.set_old_policy(bc._policy)
     best_bppo_path = os.path.join(path, current_time, 'bppo_best.pt')
     Q = Q_bc
 
@@ -191,7 +190,7 @@ if __name__ == "__main__":
             np.savetxt(os.path.join(path, current_time, 'best_bppo.csv'), [best_bppo_score], fmt='%f', delimiter=',')
 
             if args.is_update_old_policy:
-                bppo.set_old_policy(bppo._policy)
+                bppo.set_old_policy()
 
         if args.is_offpolicy_update:
             for _ in tqdm(range(int(args.q_pi_steps)), desc='Q_pi updating ......'): 
