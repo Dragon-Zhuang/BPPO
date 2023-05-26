@@ -92,7 +92,7 @@ if __name__ == "__main__":
     replay_buffer = OfflineReplayBuffer(device, state_dim, action_dim, len(dataset['actions']))
     replay_buffer.load_dataset(dataset=dataset)
     replay_buffer.compute_return(args.gamma)
-    mean, std = replay_buffer.normalize_state()
+    mean, std = replay_buffer.normalize_state() #for hopper-medium-v2 task, don't use state normalize
 
 
     # summarywriter logger
