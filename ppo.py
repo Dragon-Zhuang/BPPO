@@ -178,7 +178,7 @@ class ProximalPolicyOptimization:
         self, path: str
     ) -> None:
         self._policy.load_state_dict(torch.load(path, map_location=self._device))
-        self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
+        #self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
         print('Policy parameters loaded')
 
 
