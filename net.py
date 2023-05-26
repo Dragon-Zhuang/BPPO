@@ -79,12 +79,6 @@ class GaussPolicyMLP(nn.Module):
     ) -> None:
         super().__init__()
         self._net = MLP(state_dim, hidden_dim, depth, (2 * action_dim), 'tanh')
-        for name, p in self.named_parameters():
-                if 'weight' in name:
-                    if len(p.size()) >= 2:
-                        nn.init.orthogonal_(p, gain=1)
-                elif 'bias' in name:
-                    nn.init.constant_(p, 0)
         self._log_std_bound = (-5., 0.)
 
 
