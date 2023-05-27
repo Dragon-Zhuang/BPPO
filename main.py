@@ -12,7 +12,11 @@ from buffer import OfflineReplayBuffer
 from critic import ValueLearner, QPiLearner, QSarsaLearner
 from bppo import BehaviorCloning, BehaviorProximalPolicyOptimization
 
-
+#===========================================================Welcome to use BPPO==================================================================
+#Tips
+#for hopper-medium-v2 and walker2d-meidum-replay-v2, run 5e-4/2e-5/2e-5 for bc/q/v. 5e-5/2e-6/2e-6 for others, see the scale of dataset in d4rl.
+#for hopper-medium-v2, donnot use state normalization (state normalization is a trick in PPO).
+#===========================================================Welcome to use BPPO==================================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # Experiment
