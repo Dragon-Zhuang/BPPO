@@ -139,6 +139,8 @@ class ProximalPolicyOptimization:
             action = dist.sample()
         else:    
             action = dist.mean
+        # clip 
+        action = action.clamp(-1., 1.)
         return action
     
 
