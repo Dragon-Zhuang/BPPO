@@ -23,12 +23,10 @@ python main.py --env hopper-medium-v2
 ## Citation 
 If you use BPPO, please cite our paper as follows:
 ```
-@inproceedings{
-zhuang2023behavior,
-title={Behavior Proximal Policy Optimization},
-author={Zifeng Zhuang and Kun LEI and Jinxin Liu and Donglin Wang and Yilang Guo},
-booktitle={International Conference on Learning Representations},
-year={2023},
-url={https://openreview.net/forum?id=3c13LptpIph}
+@article{zhuang2023behavior,
+  title={Behavior proximal policy optimization},
+  author={Zhuang, Zifeng and Lei, Kun and Liu, Jinxin and Wang, Donglin and Guo, Yilang},
+  journal={arXiv preprint arXiv:2302.11312},
+  year={2023}
 }
 ```
