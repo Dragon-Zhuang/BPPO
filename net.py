@@ -8,7 +8,7 @@ def soft_clamp(
     x: torch.Tensor, bound: tuple
     ) -> torch.Tensor:
     low, high = bound
-    x = torch.tanh(x)
+    #x = torch.tanh(x)
     x = low + 0.5 * (high - low) * (x + 1)
     return x
 
@@ -44,7 +44,6 @@ class ValueMLP(nn.Module):
         super().__init__()
         self._net = MLP(state_dim, hidden_dim, depth, 1, 'relu')
 
-
     def forward(
         self, s: torch.Tensor
     ) -> torch.Tensor:
@@ -61,7 +60,6 @@ class QMLP(nn.Module):
     ) -> None:
         super().__init__()
         self._net = MLP((state_dim + action_dim), hidden_dim, depth, 1, 'relu')
-
 
     def forward(
         self, s: torch.Tensor, a: torch.Tensor

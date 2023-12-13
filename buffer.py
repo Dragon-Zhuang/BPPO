@@ -137,4 +137,5 @@ class OfflineReplayBuffer(OnlineReplayBuffer):
         mean = self._state.mean(0, keepdims=True)
         std = self._state.std(0, keepdims=True) + CONST_EPS
         self._state = (self._state - mean) / std
+        self._next_state = (self._next_state - mean) / std
         return (mean, std)

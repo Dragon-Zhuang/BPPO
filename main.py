@@ -12,7 +12,11 @@ from buffer import OfflineReplayBuffer
 from critic import ValueLearner, QPiLearner, QSarsaLearner
 from bppo import BehaviorCloning, BehaviorProximalPolicyOptimization
 
-
+#===========================================================Welcome to use BPPO==================================================================
+#Tips
+#for hopper-medium-v2 and walker2d-meidum-replay-v2, run 5e-4/2e-5/2e-5 for bc/q/v. 5e-5/2e-6/2e-6 for others, see the scale of dataset in d4rl.
+#for hopper-medium-v2, donnot use state normalization (state normalization is a trick in PPO).
+#===========================================================Welcome to use BPPO==================================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # Experiment
@@ -24,7 +28,7 @@ if __name__ == "__main__":
     # For Value
     parser.add_argument("--v_steps", default=int(2e6), type=int) 
     parser.add_argument("--v_hidden_dim", default=512, type=int)
-    parser.add_argument("--v_depth", default=2, type=int)
+    parser.add_argument("--v_depth", default=3, type=int)
     parser.add_argument("--v_lr", default=1e-4, type=float)
     parser.add_argument("--v_batch_size", default=512, type=int)
     # For Q
@@ -35,11 +39,11 @@ if __name__ == "__main__":
     parser.add_argument("--q_lr", default=1e-4, type=float) 
     parser.add_argument("--q_batch_size", default=512, type=int)
     parser.add_argument("--target_update_freq", default=2, type=int)
-    parser.add_argument("--tau", default=0.05, type=float)
+    parser.add_argument("--tau", default=0.005, type=float)
     parser.add_argument("--gamma", default=0.99, type=float)
     parser.add_argument("--is_offpolicy_update", default=False, type=bool)
     # For BehaviorCloning
-    parser.add_argument("--bc_steps", default=int(5e5), type=int) 
+    parser.add_argument("--bc_steps", default=int(5e5), type=int) # try to reduce the bc/q/v step if it works poorly, 5e-4/2e-5/2e-5 for bc/q/v, for example
     parser.add_argument("--bc_hidden_dim", default=1024, type=int)
     parser.add_argument("--bc_depth", default=2, type=int)
     parser.add_argument("--bc_lr", default=1e-4, type=float)
@@ -51,13 +55,13 @@ if __name__ == "__main__":
     parser.add_argument("--bppo_lr", default=1e-4, type=float)  
     parser.add_argument("--bppo_batch_size", default=512, type=int)
     parser.add_argument("--clip_ratio", default=0.25, type=float)
-    parser.add_argument("--entropy_weight", default=0.0, type=float)
+    parser.add_argument("--entropy_weight", default=0.0, type=float) # for ()-medium-() tasks, try to use the entropy loss, weight == 0.01
     parser.add_argument("--decay", default=0.96, type=float)
     parser.add_argument("--omega", default=0.9, type=float)
     parser.add_argument("--is_clip_decay", default=True, type=bool)  
     parser.add_argument("--is_bppo_lr_decay", default=True, type=bool)       
     parser.add_argument("--is_update_old_policy", default=True, type=bool)
-
+    parser.add_argument("--is_state_norm", default=False, type=bool)
     
     args = parser.parse_args()
     print(f'------current env {args.env} and current seed {args.seed}------')
@@ -92,8 +96,12 @@ if __name__ == "__main__":
     replay_buffer = OfflineReplayBuffer(device, state_dim, action_dim, len(dataset['actions']))
     replay_buffer.load_dataset(dataset=dataset)
     replay_buffer.compute_return(args.gamma)
-    mean, std = replay_buffer.normalize_state()
-
+    
+    #for hopper-medium-v2 task, don't use state normalize
+    if args.is_state_norm:
+        mean, std = replay_buffer.normalize_state()
+    else:
+        mean, std = 0., 1.
 
     # summarywriter logger
     comment = args.env + '_' + str(args.seed)
@@ -165,8 +173,7 @@ if __name__ == "__main__":
 
 
     # bppo training    
-    bppo.set_policy(bc._policy)
-    bppo.set_old_policy(bc._policy)
+    bppo.load(best_bc_path)
     best_bppo_path = os.path.join(path, current_time, 'bppo_best.pt')
     Q = Q_bc
 
@@ -187,7 +194,7 @@ if __name__ == "__main__":
             np.savetxt(os.path.join(path, current_time, 'best_bppo.csv'), [best_bppo_score], fmt='%f', delimiter=',')
 
             if args.is_update_old_policy:
-                bppo.set_old_policy(bppo._policy)
+                bppo.set_old_policy()
 
         if args.is_offpolicy_update:
             for _ in tqdm(range(int(args.q_pi_steps)), desc='Q_pi updating ......'): 

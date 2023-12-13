@@ -44,15 +44,14 @@ class ProximalPolicyOptimization:
         orthogonal_initWeights(self._policy)
         self._optimizer = torch.optim.Adam(
             self._policy.parameters(),
-            lr=policy_lr,
-            eps=1e-5
+            lr=policy_lr
             )
         self._policy_lr = policy_lr
         self._old_policy = deepcopy(self._policy)
         self._scheduler = torch.optim.lr_scheduler.StepLR(
             self._optimizer,
             step_size=2,
-            gamma=0.96
+            gamma=0.98
             )
         
         self._clip_ratio = clip_ratio
@@ -140,6 +139,8 @@ class ProximalPolicyOptimization:
             action = dist.sample()
         else:    
             action = dist.mean
+        # clip 
+        action = action.clamp(-1., 1.)
         return action
     
 
@@ -178,18 +179,11 @@ class ProximalPolicyOptimization:
         self, path: str
     ) -> None:
         self._policy.load_state_dict(torch.load(path, map_location=self._device))
-        self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
+        self._old_policy.load_state_dict(self._policy.state_dict())
+        #self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
         print('Policy parameters loaded')
 
-
-    def set_policy(
-        self, policy: GaussPolicyMLP
-    ) -> None:
-        self._policy = deepcopy(policy)
-        self._optimizer = torch.optim.Adam(self._policy.parameters(), lr=self._policy_lr)
-
-
     def set_old_policy(
-        self, old_policy: GaussPolicyMLP
+        self,
     ) -> None:
-        self._old_policy = deepcopy(old_policy)
+        self._old_policy.load_state_dict(self._policy.state_dict())
